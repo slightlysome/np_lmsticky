@@ -1,0 +1,187 @@
+<h3>Plugin overview</h3>
+
+<p>
+The NP_LMSticky plugin gives you the possibility to stick one or more items on the index page. 
+It can be used to show the items with the ordinary item template or with a special template.
+</p>
+
+<p>
+The current skin variables in the Nucleus core for showing blog content on index pages 
+does not have the possibility to have plugins filter the items shown.
+Because of this the NP_LMSticky plugin uses a helper plugin for handling item filtering. 
+This plugin is called NP_LMReplacementVars and gives alternative implementations of some key Nucleus core skin variables.
+It must be installed before the NP_LMSticky plugin can be installed. 
+The NP_LMReplacementVars plugin can be downloaded from the NP_LMReplacementVars <a href="http://www.slightlysome.net/nucleus-plugins/np_lmreplacementvars">plugin page</a>.
+</p>
+
+<h3>Installation</h3>
+
+<ul>
+<li>
+Upload the NP_LMSticky.php file and the lmsticky directory from the zip file to the Nucleus CMS plugins directory (nucleus/plugins) on your web server.
+</li>
+<li>
+Go to the Plugins page in the admin area. You should be able to select the plugin in the dropdown list under the "Install New Plugin" section and press the "Install Plugin" button.
+</li>
+</ul>
+
+<h3>Upgrade</h3>
+
+<ul>
+<li>
+Take a backup of the current plugin files. You will need these if you want to rollback to the previous version after the upgrade.
+</li>
+<li>
+Take a backup of the database used for you Nucleus installation.
+</li>
+<li>
+Replace the old plugin files with the new ones. Do not uninstall the plugin.
+</li>
+<li>
+If a plugin data upgrade is needed, will an upgrade plugin data option be 
+available on the NP_LMSticky plugin admin page. Choose this option to upgrade the plugin data.
+</li>
+<li>
+
+After the plugin data upgrade has been performed may a rollback option and a commit option be available on the NP_LMSticky 
+plugin admin page. Not all upgrades support the rollback and commit option.
+</li>
+<li>
+If you are not pleased with the new version of the plugin you may use the rollback option to rollback the plugin data upgrade. 
+After the rollback of the plugin data upgrade you have to replace the new plugin files with the old plugin files.
+</li>
+<li>
+If you are pleased with the new version of the plugin you should use the commit option to commit the plugin data upgrade. 
+After the commit of the plugin data upgrade will any rollback and commit options disappear.
+</li>
+</ul>
+
+
+<h3>Configuration</h3>
+
+<p>
+The NP_LMSticky plugin has the following options on the blog level:
+</p>
+
+<ul>
+<li>
+<b>ItemIDs to stick on index page</b> - A comma seperated list of items to stick on the index page. 
+Each item must be represented with the item id of the item. 
+This item id can be obtained by checking the edit item URL in the admin area. 
+Example: http://example.com/nucleus/index.php?action=itemedit&<b>itemid=1</b>. For this item is the item id is 1. 
+If more that 1 item is sticked will they be shown in the sort order set for the index page.
+</li>
+<li>
+<b>Only stick items on first index page</b> - Will only show sticky items on the first page if the index page consists of more than one page if set to Yes. 
+Requires that you use the NP_LMBlogPaginate plugin to paginate the index page.
+</li>
+
+<li>
+<b>Exclude sticky items from normal index and archive</b> - Does not shows the sticked items in the normal index and archive pages if set to Yes. 
+If you provide a link to the item page in the sticked items it's recommended to set this to No. 
+If you use a special template to show sticked items that doesn't link to their item page can this be set to Yes.
+</li>
+</ul>
+
+<h3>Usage</h3>
+
+<p>
+After the plugin is installed and configured you need to use the NP_LMReplacementVars skin variable for 
+showing the index page (see the NP_LMReplacementVars section bellow) to show the sticky items. 
+</p>
+
+
+<h3>NP_LMReplacementVars</h3>
+
+<p>
+The replacement skin variable for <code>&lt;%blog()%&gt;</code> in the NP_LMReplacementVars plugin must be used by your blog if 
+you want this plugin to function. 
+See the documentation for the NP_LMReplacementVars plugin for further information on how to use the blog replacement skin variable.
+</p>
+
+<p>
+To show the sticky items you need to add an extra NP_LMReplacementVars blog skin variable to your main index skin. 
+This skin varaible must have the dynamic parameter <b>lmsticky</b> set to <code>enable</code>.
+</p>
+
+<p>
+The NP_LMSticky plugin recognize the following dynamic parameter used by the NP_LMReplacementVars replacement for the 
+blog skin variable:
+</p>
+
+<ul>
+<li>
+<b>lmsticky</b> - When set to <code>enable</code> will the skinvar only show items configured to be 
+sticked by the NP_LMSticky for the current blog.
+</li>
+</ul>
+
+<p>
+If you use the NP_LMBlogPaginate plugin to paginate the main index, 
+you must use the dynamic parameter <b>lmblogpaginate</b> set to 
+<code>disable</code> to turn of the pagination for the skinvar that shows the sticked items.
+</p>
+
+<p>
+If you use the NP_LMLabel plugin to filter items, 
+you must use the dynamic parameter <b>lmlabelfilter</b> set to 
+<code>disable</code> to turn of the filtration for the skinvar that shows the sticked items.
+</p>
+
+<p>
+Example use of the blog skinvar replacement: 
+</p>
+
+<pre>
+&lt;%LMReplacementVars(Blog, lm/sticky, lmsticky=enable, lmblogpaginate=disable)%&gt;
+&lt;%LMReplacementVars(Blog, lm/index)%&gt;
+</pre>
+
+<p>
+The above will first show the sticked items using the template <code>lm/sticky</code>, 
+and then show the normal main index using the template <code>lm/index</code>.
+</p>
+
+<h3>Support and Bug reports</h3>
+
+<p>
+For additional support and/or bug reports please use the Nucleus forum 
+<a href="http://forum.nucleuscms.org/viewtopic.php?t=21075">plugin announce thread</a> 
+or the <a href="http://www.slightlysome.net/nucleus-plugins/np_lmsticky">plugin page</a> comment section.
+</p>
+
+
+<h3>Compability</h3>
+
+<p>
+This version of the NP_LMBlogPaginate plugin is tested against version 3.64 of Nucleus CMS. 
+The minimum version of Nucleus CMS needed for using this plugin is 3.60.
+</p>
+<p> 
+The minimum version of the NP_LMReplacementVars plugin needed by this plugin is version 1.0.0. 
+If the NP_LMFancierURL plugin is installed is the minimum version of the NP_LMFancierURL plugin needed by this plugin version 3.0.0.
+</p>
+
+
+<h3>Version History</h3>
+
+<ul>
+<li><b>v1.0.0 2013-02-10:</b> by Leo (http://www.slightlysome.net)</li>
+<ul>
+<li>Initial release.</li>
+</ul>
+<li><b>v1.0.1 2013-05-20:</b> by Leo (http://www.slightlysome.net)</li>
+<ul>
+<li>Changes for PHP 5.4.</li>
+</ul>
+</ul>
+
+<h3>Download</h3>
+
+<p>
+<a href="http://www.slightlysome.net/download/NP_LMSticky_v101.zip" title="Download NP_LMSticky_v101.zip">Download NP_LMSticky v1.0.1</a>.
+The latest version of the NP_LMSticky plugin can be downloaded from the NP_LMSticky <a href="http://www.slightlysome.net/nucleus-plugins/np_lmsticky">plugin page</a>.
+</p>
+<p> 
+The latest version of the NP_LMReplacementVars plugin can be downloaded from the NP_LMReplacementVars <a href="http://www.slightlysome.net/nucleus-plugins/np_lmreplacementvars">plugin page</a>.
+</p>
